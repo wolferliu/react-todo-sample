@@ -1,0 +1,42 @@
+.todo-app {
+  font-family: sans-serif;
+  text-align: left;
+  border: 1px solid black;
+  padding: 0px 10px 10px 10px;
+}
+.imcomplete-banner {
+  display: flex;
+}
+.imcomplete-number {
+  flex-grow: 1;
+}
+.hide-complete {
+  flex-grow: 1;
+}
+
+.task-list {
+  min-height: 200px;
+}
+.task-line {
+  display: flex;
+  flex-direction: row;
+  margin: 5px 0px 5px 0px;
+}
+.task-checkbox {
+  flex-basis: 30px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  text-align: center;
+}
+.task-content {
+  flex-grow: 1;
+  align-content: stretch;
+}
+
+.task-input {
+  width: 99%;
+  height: 50px;
+}
+.add-button {
+  width: 100px;
+}
