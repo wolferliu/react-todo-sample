@@ -50,12 +50,18 @@ export default function App() {
     };
     setTaskList([obj].concat(taskList));
   };
-  const handleComplete = (e) => {
-    //todo update todo list after handleComplete
-    console.log("complete " + e.target.value);
-    let theItem = taskList.find((item) => item.taskName === e.target.value);
-    if (theItem !== undefined) {
-      theItem.finished = true;
+  const handleToggleComplete = (e) => {
+    let itemIndex = taskList.findIndex(
+      (item) => item.taskName === e.target.value
+    );
+    if (itemIndex !== -1) {
+      let theItem = taskList[itemIndex];
+      theItem.finished = !theItem.finished;
+      let newList = taskList
+        .slice(0, itemIndex)
+        .concat([theItem], taskList.slice(itemIndex + 1));
+
+      setTaskList(newList);
     }
   };
 
@@ -88,7 +94,7 @@ export default function App() {
                   <input
                     type="checkbox"
                     value={item.taskName}
-                    onChange={handleComplete}
+                    onChange={handleToggleComplete}
                     checked={item.finished}
                   />
                 </div>
