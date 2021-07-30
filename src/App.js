@@ -16,23 +16,27 @@ export default function App() {
     {
       finished: false,
       taskName: "Have Dinner with Dad",
-      due_date: ""
+      due_date: "",
+      id: 1
     },
     {
       finished: false,
       taskName: "Eat some fruits",
-      due_date: ""
+      due_date: "",
+      id: 2
     },
     {
       finished: true,
       taskName: "Drink some water",
-      due_date: ""
+      due_date: "",
+      id: 3
     },
     {
       finished: false,
       taskName:
         "Learn react and finish the todo-list app, and the challenge in FFC.",
-      due_date: ""
+      due_date: "",
+      id: 4
     }
   ]);
   const [hideComplete, setHideComplete] = useState(false);
@@ -43,16 +47,23 @@ export default function App() {
     setHideComplete(!hideComplete);
   };
   const handleAdd = () => {
+    let biggestId = taskList.reduce((accumulator, item) => {
+      if (accumulator < item.id) {
+        return item.id;
+      }
+      return accumulator;
+    }, 0);
     let obj = {
       finished: false,
       taskName: taskNameToAdd,
-      due_date: ""
+      due_date: "",
+      id: biggestId + 1
     };
     setTaskList([obj].concat(taskList));
   };
   const handleToggleComplete = (e) => {
     let itemIndex = taskList.findIndex(
-      (item) => item.taskName === e.target.value
+      (item) => item.id.toString() === e.target.value
     );
     if (itemIndex !== -1) {
       let theItem = taskList[itemIndex];
@@ -60,7 +71,6 @@ export default function App() {
       let newList = taskList
         .slice(0, itemIndex)
         .concat([theItem], taskList.slice(itemIndex + 1));
-
       setTaskList(newList);
     }
   };
@@ -93,7 +103,7 @@ export default function App() {
                 <div className="task-checkbox">
                   <input
                     type="checkbox"
-                    value={item.taskName}
+                    value={item.id}
                     onChange={handleToggleComplete}
                     checked={item.finished}
                   />
