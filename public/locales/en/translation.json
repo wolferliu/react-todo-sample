@@ -1,0 +1,15 @@
+{
+  "appName": "Todo List",
+  "taskToComplete": " tasks to complete",
+  "hideComplete": "Hide complete",
+  "addNewTaskButton": "Add a new task",
+  "taskNameLabel": "Task Name:",
+  "dueDateLabel": "Due date:",
+  "addThisTaskButton": "Add this task",
+  "backToListButton": "Back to list",
+  "error": {
+    "cannotFetch": "Failed to fetch data",
+    "taskNameIsEmpty": "You must input task name to add!",
+    "dueDateIsDue": "Due date must be greater than today!"
+  }
+}

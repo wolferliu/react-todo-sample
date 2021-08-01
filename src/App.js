@@ -1,111 +1,43 @@
 import "./styles.css";
-import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import {
-  addTodo,
-  toggleTodo,
-  toggleHideComplete,
-  selectImcompleteTodoList
-} from "./reducers/todoSlice";
-import { nanoid } from "@reduxjs/toolkit";
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect
+} from "react-router-dom";
+import { TodoList } from "./features/todo/TodoList";
+import { TodoInput } from "./features/todo/TodoInput";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function App() {
-  return (
-    <div className="todo-app">
-      <h2>Todo List</h2>
-      <TodoBanner />
-      <hr />
-
-      <TodoList />
-      <hr />
-
-      <TodoInput />
-    </div>
-  );
-}
-
-function TodoBanner() {
-  const dispatch = useDispatch();
-  const imcompleteTodoList = useSelector(selectImcompleteTodoList);
-  const hideComplete = useSelector((state) => state.todo.hideComplete);
-  const handleChangeInHc = () => {
-    dispatch(toggleHideComplete());
+  const { t, i18n } = useTranslation();
+  const [language, setLanguage] = useState(i18n.language);
+  const handleLanguageChange = (e) => {
+    i18n.changeLanguage(e.target.value);
+    setLanguage(e.target.value);
   };
   return (
-    <div className="imcomplete-banner">
-      <div className="imcomplete-number">
-        {imcompleteTodoList.length} tasks to complete
+    <Router>
+      <div className="todo-app">
+        <div className="todo-title">
+          <h2>{t("appName")}</h2>
+          <select value={language} onChange={handleLanguageChange}>
+            <option value="en">English</option>
+            <option value="zh-CN">中文</option>
+          </select>
+        </div>
+        <Switch>
+          <Route exact path="/">
+            <TodoList />
+          </Route>
+          <Route exact path="/add">
+            <TodoInput />
+          </Route>
+          <Redirect to="/" />
+        </Switch>
       </div>
-      <div className="hide-complete">
-        <input
-          type="checkbox"
-          onChange={handleChangeInHc}
-          checked={hideComplete}
-        />
-        Hide Complete
-      </div>
-    </div>
-  );
-}
-
-function TodoList() {
-  const hideComplete = useSelector((state) => state.todo.hideComplete);
-  const imcompleteTodoList = useSelector(selectImcompleteTodoList);
-  const allTodoList = useSelector((state) => state.todo.todoList);
-  let todoList = hideComplete ? imcompleteTodoList : allTodoList;
-  return (
-    <div className="task-list">
-      {todoList.map((item, index) => {
-        return <TodoItem todo={item} />;
-      })}
-    </div>
-  );
-}
-
-function TodoItem(props) {
-  const item = props.todo;
-
-  const dispatch = useDispatch();
-  const handleToggleComplete = (e) => {
-    const id = e.target.value;
-    dispatch(toggleTodo(id));
-  };
-  return (
-    <div className="task-line" key={item.id}>
-      <div className="task-checkbox">
-        <input
-          type="checkbox"
-          value={item.id}
-          onChange={handleToggleComplete}
-          checked={item.finished}
-        />
-      </div>
-      <div className="task-content">{item.taskName}</div>
-    </div>
-  );
-}
-
-function TodoInput() {
-  const dispatch = useDispatch();
-  const [taskNameToAdd, setTaskNameToAdd] = useState("");
-  const handleAdd = () => {
-    dispatch(addTodo({ id: nanoid(), taskName: taskNameToAdd }));
-  };
-
-  return (
-    <div>
-      <span>Task Name:</span>
-      <textarea
-        className="task-input"
-        placeholder="Task Name Here"
-        value={taskNameToAdd}
-        onChange={(e) => {
-          setTaskNameToAdd(e.target.value);
-        }}
-      />
-      <button className="add-button" onClick={handleAdd}>
-        Add it
-      </button>
-    </div>
+    </Router>
   );
 }

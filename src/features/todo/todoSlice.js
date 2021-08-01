@@ -7,26 +7,26 @@ export const todoSlice = createSlice({
       {
         finished: false,
         taskName: "Have Dinner with Dad",
-        due_date: "",
+        dueDate: "2021-08-11",
         id: "111"
       },
       {
         finished: false,
         taskName: "Eat some fruits",
-        due_date: "",
+        dueDate: "2021-07-31",
         id: "112"
       },
       {
         finished: true,
         taskName: "Drink some water",
-        due_date: "",
+        dueDate: "2021-07-21",
         id: "113"
       },
       {
         finished: false,
         taskName:
           "Learn react and finish the todo-list app, and the challenge in FFC.",
-        due_date: "",
+        dueDate: "2021-07-01",
         id: "114"
       }
     ],
@@ -37,13 +37,20 @@ export const todoSlice = createSlice({
       state.hideComplete = !state.hideComplete;
     },
     addTodo: (state, action) => {
-      const { id, taskName } = action.payload;
-      state.todoList.unshift({ id, taskName, finished: false });
+      const { id, taskName, dueDate } = action.payload;
+      state.todoList.unshift({ id, taskName, dueDate, finished: false });
     },
     toggleTodo: (state, action) => {
       const id = action.payload;
       const item = state.todoList.find((item) => item.id === id);
       item.finished = !item.finished;
+    },
+    deleteTodo: (state, action) => {
+      const id = action.payload;
+      const itemIndex = state.todoList.findIndex((item) => item.id === id);
+      if (itemIndex > -1) {
+        state.todoList.splice(itemIndex, 1);
+      }
     }
   }
 });
@@ -54,5 +61,10 @@ export const selectImcompleteTodoList = (state) => {
   });
 };
 
-export const { toggleTodo, addTodo, toggleHideComplete } = todoSlice.actions;
+export const {
+  toggleTodo,
+  addTodo,
+  toggleHideComplete,
+  deleteTodo
+} = todoSlice.actions;
 export default todoSlice.reducer;

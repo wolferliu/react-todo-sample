@@ -3,7 +3,20 @@
   text-align: left;
   border: 1px solid black;
   padding: 0px 10px 10px 10px;
+  width: 300px;
+  margin: 0 auto;
 }
+.todo-title {
+  display: flex;
+  align-items: center;
+}
+.todo-title > h2 {
+  flex: 1 1 auto;
+}
+.todo-title > select {
+  flex: 0 0 auto;
+}
+
 .imcomplete-banner {
   display: flex;
 }
@@ -23,7 +36,7 @@
   margin: 5px 0px 5px 0px;
 }
 .task-checkbox {
-  flex-basis: 30px;
+  flex-basis: 20px;
   flex-grow: 0;
   flex-shrink: 0;
   text-align: center;
@@ -32,11 +45,28 @@
   flex-grow: 1;
   align-content: stretch;
 }
+.task-due-date {
+  font-size: 12px;
+  color: #222222;
+}
+.task-due-date-already {
+  font-size: 12px;
+  color: #ff0000;
+}
+.task-action {
+  flex-basis: 25px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  text-align: center;
+}
 
 .task-input {
   width: 99%;
   height: 50px;
 }
 .add-button {
-  width: 100px;
+  width: 150px;
+}
+.error-message {
+  color: #ff0000;
 }
