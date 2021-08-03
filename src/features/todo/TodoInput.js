@@ -17,14 +17,14 @@ export function TodoInput() {
   const [dueDate, setDueDate] = useState(new Date());
   const handleAdd = () => {
     if (taskNameToAdd.trim().length === 0) {
-      setErrorMessage(t("error.taskNameIsEmpty"));
+      setErrorMessage("error.taskNameIsEmpty");
       return;
     }
     //check the dueDate, must be greater than today.
     const todayStr = format(new Date(), "yyyy-MM-dd");
     const dueDateStr = format(dueDate, "yyyy-MM-dd");
     if (dueDateStr < todayStr) {
-      setErrorMessage(t("error.dueDateIsDue"));
+      setErrorMessage("error.dueDateIsDue");
       return;
     }
     dispatch(
@@ -62,7 +62,7 @@ export function TodoInput() {
         }}
       />
       <br />
-      <p className="error-message">{errorMessage}</p>
+      <p className="error-message">{t(errorMessage)}</p>
       <br />
       <br />
       <button className="add-button" onClick={handleAdd}>
